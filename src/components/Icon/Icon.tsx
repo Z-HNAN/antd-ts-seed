@@ -2,10 +2,10 @@ import React from 'react'
 
 /**
  * 自定义Icon
+ * svg文件的名称作为Icon的type
+ * 如 svg/add.svg -> <Icon type='add' />
  */
 export type IconType = string
-  | 'add'
-  | 'minus'
 
 export interface IconProps {
   type: IconType
