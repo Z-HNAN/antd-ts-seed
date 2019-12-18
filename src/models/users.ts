@@ -12,8 +12,6 @@ export interface IUser {
 
 export interface IUsersModelState {
   list: IUser[]
-  total: number
-  page: number
 }
 
 export interface IUsersModelType {
@@ -21,17 +19,15 @@ export interface IUsersModelType {
   state: IUsersModelState
   reducers: {
     /* 存入state中 */
-    save: Reducer<IUsersModelState>,
+    save: Reducer<any>,
   }
   effects: {
-    /* 拉取所有用户 */
+    /* 拉取用户 */
     fetch: Effect,
-    /* 重新拉取用户 */
-    reload: Effect,
+    /* 初始化用户 */
+    init: Effect,
     /* 删除用户 */
     remove: Effect,
-    /* 更新用户 */
-    update: Effect,
     /* 创建用户 */
     create: Effect,
   }
@@ -45,40 +41,33 @@ const UsersModel: IUsersModelType = {
   namespace: 'users',
   state: {
     list: [],
-    total: 0,
-    page: 0,
   },
   reducers: {
-    save(state, { payload: { data: list, total, page } }) {
-      return { ...state, list, total, page }
-    }
+    save(state, { payload: { data: list } }) {
+      return { ...state, list }
+    },
   },
   effects: {
-    *fetch({ payload }, { call, put }) {
-      const data = yield call(userService.fetch, payload)
-      yield put({ type: 'save', payload: { data }})
+    *fetch(_, { call, put }) {
+      const data = yield call(userService.fetch)
+      yield put({ type: 'save', payload: { data } })
     },
-
-    *reload(_, { put, select }){
-      const page = yield select(
-        (state: IConnectState) => state.users.page
-      )
-      yield put({ type: 'fetch', payload: { page }})
+    *init(_, { put, select }) {
+      const list = yield select((state: IConnectState) => state.users.list)
+      // 只有用户列表为空的时候才会去拉取用户
+      if (list.length === 0) {
+        yield put({ type: 'fetch' })
+      }
     },
-
-    *remove({ payload: { id }}, { call }) {
+    *remove({ payload }, { call, put }) {
+      const { id } = payload
       yield call(userService.remove, { id })
-      yield call(this.reload)
+      yield put({ type: 'fetch' })
     },
-
-    *update({ payload: { id, values }}, { call }){
-      yield call(userService.update, { id, values })
-      yield call(this.reload)
-    },
-
-    *create({ payload: { values }}, { call }){
+    *create({ payload }, { call, put }) {
+      const { values } = payload
       yield call(userService.create, { values })
-      yield call(this.reload)
+      yield put({ type: 'fetch' })
     },
   },
 
@@ -86,7 +75,7 @@ const UsersModel: IUsersModelType = {
     init({ dispatch, history }) {
       return history.listen(({ pathname }) => {
         if (pathname === '/users') {
-          dispatch({ type: 'fetch', payload: {} })
+          dispatch({ type: 'init' })
         }
       })
     }
