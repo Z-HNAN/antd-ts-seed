@@ -32,9 +32,9 @@ const config: IConfig =  {
   urlLoaderExcludes: [/.svg$/],
 
   /* webpack其他配置 */
-  chainWebpack(config) {
+  chainWebpack(webpackConfig) {
     // 设置svg loader
-    config.module
+    webpackConfig.module
       .rule('svg')
       .test(/.svg$/)
       .use('svg-sprite-loader')
