@@ -1,8 +1,7 @@
-const { eslint } = require('@umijs/fabric');
 
 module.exports = {
-  ...eslint,
+  extends: [require.resolve('@umijs/fabric/dist/eslint')],
   rules: {
-    ...eslint.rules,
+    'no-param-reassign': 0
   }
 };
