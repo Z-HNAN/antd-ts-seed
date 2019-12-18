@@ -1,11 +1,5 @@
-/*
- * @Author: Jan-superman 
- * @Date: 2018-10-09 15:37:17 
- * @Last Modified by: superman
- * @Last Modified time: 2018-12-24 23:26:50
- */
 
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { TabBar } from 'antd-mobile';
 import Router from 'umi/router';
 import Icon from '@/components/Icon'
@@ -20,18 +14,12 @@ export interface ITabBar {
   link: string
 }
 
-const tabBarData: ITabBar[] = [
+export const tabBarData: ITabBar[] = [
   {
-    title: '岗位',
+    title: '用户',
     icon: 'add',
     selectedIcon: 'add',
-    link: '/post',
-  },
-  {
-    title: '计划',
-    icon: 'add',
-    selectedIcon: 'add',
-    link: '/schedule',
+    link: '/users',
   },
   {
     title: '我的',
@@ -49,7 +37,7 @@ interface IProps {
 // {children.props.location.pathname === link && children}
 
 const MenuBar: React.FC<IProps> = props => {
-  const { pathname = '/post', children } = props
+  const { pathname, children } = props
   return (
     <TabBar>
       {tabBarData.map(({ title, icon, selectedIcon, link }) => (
