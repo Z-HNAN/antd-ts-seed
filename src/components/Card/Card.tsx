@@ -15,7 +15,7 @@ export const NameCard: React.FC<IProps> = props => {
   return (
     <div>
       <WhiteSpace size="lg" />
-      <Card full={true}>
+      <Card full>
         <Card.Header
           title={name}
           thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
@@ -28,4 +28,3 @@ export const NameCard: React.FC<IProps> = props => {
     </div>
   )
 }
-
