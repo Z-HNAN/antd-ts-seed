@@ -1,5 +1,3 @@
-import { AnyAction } from 'redux';
-
 import { IUsersModelState } from './users'
 
 export { IUsersModelState }

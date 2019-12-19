@@ -7,7 +7,6 @@ import { Button } from 'antd-mobile'
 import Router from 'umi/router';
 
 const Me: React.FC<{}> = () => {
-
   const handleClick = () => {
     Router.push('/your')
   }
