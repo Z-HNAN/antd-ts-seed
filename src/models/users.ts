@@ -5,6 +5,7 @@ import { IConnectState } from './connect.d'
 import * as userService from '@/services/users'
 
 export interface IUser {
+  id: number
   name: string
   email: string
   website: string
@@ -78,7 +79,7 @@ const UsersModel: IUsersModelType = {
           dispatch({ type: 'init' })
         }
       })
-    }
+    },
   },
 }
 
