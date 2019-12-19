@@ -1,24 +1,37 @@
 import React from 'react'
 import { connect } from 'dva'
 import { Dispatch, AnyAction } from 'redux'
-import { IUser } from '@/models/users'
 import { IConnectState } from '@/models/connect.d'
-
+import { Toast } from 'antd-mobile'
+import { userCardSelector, UserCardType } from './selector'
 import NameCard from '@/components/Card'
 
 interface PropsType {
   dispatch: Dispatch<AnyAction>
-  list: IUser[]
+  list: UserCardType[]
   loading: boolean
 }
 
 
 const Users: React.FC<PropsType> = props => {
   const { dispatch, list, loading } = props
-
-  const handleDelete = (id: string) => {
+  console.log(list);
+  
+  const handleDelete = (id: number) => {
     dispatch({ type: 'users/remove', payload: { id } })
   }
+
+  // 拉取用户loading相关
+  React.useEffect(() => {
+    console.log(loading);
+      Toast.hide()
+    if (loading === true) {
+      Toast.loading('loading...', 1)
+    } else {
+      Toast.hide()
+    }
+    return () => { Toast.hide() }
+  }, [loading])
 
   return (
     <div>
@@ -33,10 +46,10 @@ const Users: React.FC<PropsType> = props => {
 }
 
 const mapStateToProps = (state: IConnectState) => {
-  const { users, loading } = state
+  const { loading } = state
   return {
     loading: (loading.effects['users/fetch']) as boolean,
-    list: users.list,
+    list: userCardSelector(state),
   }
 }
 
