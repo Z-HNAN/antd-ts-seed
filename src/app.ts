@@ -1,3 +1,13 @@
+let plugins: any[] = [];
+
+if (process.env.NODE_ENV === 'development') {
+  plugins = [
+    ...plugins,
+    /* eslint-disable-next-line */
+    require('dva-logger')(),
+  ];
+}
+
 export const dva = {
   config: {
     onError(err: ErrorEvent) {
@@ -5,7 +15,5 @@ export const dva = {
       // console.error(err.message);
     },
   },
-  plugins: [
-    require('dva-logger')(),
-  ],
+  plugins,
 }
