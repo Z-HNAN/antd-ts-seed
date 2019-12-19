@@ -15,7 +15,6 @@ export const NameCard: React.FC<IProps> = props => {
 
   return (
     <div>
-      <WhiteSpace size="lg" />
       <Card full>
         <Card.Header
           title={name}
