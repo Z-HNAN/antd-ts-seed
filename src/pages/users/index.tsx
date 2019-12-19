@@ -1,32 +1,42 @@
 import React from 'react'
 import { connect } from 'dva'
+import { Dispatch, AnyAction } from 'redux'
 import { IUser } from '@/models/users'
 import { IConnectState } from '@/models/connect.d'
 
 import NameCard from '@/components/Card'
 
-interface IProps {
+interface PropsType {
+  dispatch: Dispatch<AnyAction>
   list: IUser[]
+  loading: boolean
 }
 
-const Users: React.FC<IProps> = props => {
-  const { list } = props
+
+const Users: React.FC<PropsType> = props => {
+  const { dispatch, list, loading } = props
+
+  const handleDelete = (id: string) => {
+    dispatch({ type: 'users/remove', payload: { id } })
+  }
+
   return (
     <div>
       <h1>user list</h1>
       {
-        list.map((user) => (
-          <NameCard key={user.name} {...user}/>
-        )
-      )}
+        list.map(user => (
+          <NameCard key={user.name} {...user} onDelete={() => { handleDelete(user.id) }} />
+        ))
+      }
     </div>
   )
 }
 
 const mapStateToProps = (state: IConnectState) => {
-  const { list } = state.users
+  const { users, loading } = state
   return {
-    list,
+    loading: (loading.effects['users/fetch']) as boolean,
+    list: users.list,
   }
 }
 
