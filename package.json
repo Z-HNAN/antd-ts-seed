@@ -14,10 +14,11 @@
     "nprogress": "^0.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "redux": "^4.0.4",
     "umi": "^2.9.0",
-    "umi-request": "^1.2.11",
     "umi-plugin-react": "^1.8.0",
-    "umi-types": "^0.3.0"
+    "umi-request": "^1.2.11",
+    "umi-types": "^0.5.8"
   },
   "devDependencies": {
     "@types/jest": "^23.3.12",
