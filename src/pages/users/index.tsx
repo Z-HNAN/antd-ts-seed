@@ -3,7 +3,6 @@ import { connect } from 'dva'
 import { Dispatch, AnyAction } from 'redux'
 import { IConnectState } from '@/models/connect.d'
 import {
-  Toast,
   Button,
   WhiteSpace,
   Modal,
@@ -11,17 +10,39 @@ import {
 import { userCardSelector, UserCardType } from './selector'
 
 import NameCard from '@/components/Card'
+import LoadingToast from '@/components/LoadingToast'
 import InputUserModal from './components/InputUserModal'
 
 interface PropsType {
   dispatch: Dispatch<AnyAction>
   list: UserCardType[]
-  loading: boolean
+  fetchLoading: boolean
+  deleteLoading: boolean
+  createLoading: boolean
 }
 
+const mapStateToProps = (state: IConnectState) => {
+  const { loading } = state
+  return {
+    // 拉取user的loading
+    fetchLoading: (loading.effects['users/fetch']) as boolean,
+    // 删除user的loading
+    deleteLoading: (loading.effects['users/remove']) as boolean,
+    // 新增user的loading
+    createLoading: (loading.effects['users/create']) as boolean,
+
+    list: userCardSelector(state),
+  }
+}
 
 const Users: React.FC<PropsType> = props => {
-  const { dispatch, list, loading } = props
+  const {
+    dispatch,
+    list,
+    fetchLoading,
+    deleteLoading,
+    createLoading,
+  } = props
 
   // 处理删除用户
   const handleDelete = (id: number) => {
@@ -46,19 +67,11 @@ const Users: React.FC<PropsType> = props => {
     setNewUser(null)
   }
 
-  // 拉取用户loading相关
-  React.useEffect(() => {
-      Toast.hide()
-    if (loading === true) {
-      Toast.loading('loading...', 1)
-    } else {
-      Toast.hide()
-    }
-    return () => { Toast.hide() }
-  }, [loading])
-
   return (
     <div>
+      <LoadingToast type="fetchLoading" loading={fetchLoading} />
+      <LoadingToast type="deleteLoading" loading={deleteLoading} />
+      <LoadingToast type="createLoading" loading={createLoading} />
       <h1>user list</h1>
       {
         list.map(user => (
@@ -84,14 +97,6 @@ const Users: React.FC<PropsType> = props => {
       </Modal>
     </div>
   )
-}
-
-const mapStateToProps = (state: IConnectState) => {
-  const { loading } = state
-  return {
-    loading: (loading.effects['users/fetch']) as boolean,
-    list: userCardSelector(state),
-  }
 }
 
 export default connect(mapStateToProps)(Users)
