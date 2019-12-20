@@ -8,7 +8,7 @@ const plugins: IPlugin[] = [
       antd: false,
       dva: true,
       dynamicImport: false,
-      title: 'ygb3.0-apply',
+      title: 'antd-mobile-ts-seed',
       dll: false,
       routes: {
         exclude: [
