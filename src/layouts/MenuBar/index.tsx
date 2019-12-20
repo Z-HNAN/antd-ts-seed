@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { TabBar } from 'antd-mobile';
 import Router from 'umi/router';
 import Icon from '@/components/Icon'
@@ -31,6 +31,7 @@ export const tabBarData: ITabBar[] = [
 
 interface IProps {
   pathname: string
+  children: ReactElement
   [porpName: string]: any
 }
 
@@ -50,7 +51,7 @@ const MenuBar: React.FC<IProps> = props => {
           onPress={() => Router.push(`${link}`)}
         >
           {/* 匹配到的children路由进行渲染 */}
-          {children}
+          {children.props.location.pathname === link && children}
         </TabBar.Item>
       ))}
     </TabBar>
