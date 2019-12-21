@@ -48,7 +48,7 @@ const MenuBar: React.FC<IProps> = props => {
           icon={<Icon className={styles.tabBarIcon} type={icon} />}
           selectedIcon={<Icon className={styles.tabBarIcon} type={selectedIcon} />}
           selected={pathname === link}
-          onPress={() => Router.push(`${link}`)}
+          onPress={() => Router.replace(`${link}`)}
         >
           {/* 匹配到的children路由进行渲染 */}
           {children.props.location.pathname === link && children}
