@@ -2,94 +2,67 @@
  * 普通布局
  */
 
-import React from 'react'
-import withRouter from 'umi/withRouter'
-import router from 'umi/router';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import { ClickParam } from 'antd/lib/menu'
+import React, { ReactElement } from 'react'
+import { withRouter, router } from 'umi'
+import { Layout, Avatar, Menu, Dropdown, Modal, Icon } from 'antd';
+import styles from './BasicLayout.less'
 
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const { confirm } = Modal;
+const { Header } = Layout;
 
-// import styles from './BasicLayout.less'
+interface PropsType {
+  children: ReactElement
+}
 
-// 需要路由跳转的页面
+// 用户头像类型
+const UserTypeList = [
+  ['admin', '#f56a00'],
+  ['user', '#7265e6'],
+  ['tourist', '#ffbf00'],
+]
 
-const BasicLayout: React.FC<any> = props => {
+const BasicLayout: React.FC<PropsType> = props => {
   const { children } = props
 
-  // 处理router跳转
-  function handleMenuClick(param: ClickParam) {
-    const { key } = param
-    // 替换路由
-    router.replace(`/user/${key}`)
+  const [userName, userAvatarColor] = UserTypeList[0]
+
+  // 处理退出，二次确认框确认
+  const handleLogout = () => {
+    confirm({
+      title: '你确定要退出吗?',
+      onOk() {
+        router.push('/login')
+      },
+    })
   }
+
+  const userNameMenu = (
+    <Menu>
+      <Menu.Item>
+        <a onClick={handleLogout}>
+          退出登录
+        </a>
+      </Menu.Item>
+    </Menu>
+  )
 
   return (
     <Layout>
-      <Header className="header">
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-          style={{ lineHeight: '64px' }}
-        >
-        </Menu>
+      <Header className={styles.header}>
+        <div className={styles.logo} />
+        Header
+        <div className={styles.user}>
+          <Avatar className={styles.userAvatar} style={{ backgroundColor: userAvatarColor, verticalAlign: 'middle' }} size="large">
+            {userName}
+          </Avatar>
+          <Dropdown className={styles.userName} overlay={userNameMenu}>
+            <a className="ant-dropdown-link" href="#">
+              赵大锤 <Icon type="down" />
+            </a>
+          </Dropdown>
+        </div>
       </Header>
-      <Layout>
-        <Sider width={200} style={{ background: '#fff' }}>
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{ height: '100%', borderRight: 0 }}
-            onClick={handleMenuClick}
-          >
-            <Menu.Item key="page1">
-              <span>
-                <Icon type="user" />
-                page1
-              </span>
-            </Menu.Item>
-            <Menu.Item key="page2">
-              <span>
-                <Icon type="user" />
-                page2
-              </span>
-            </Menu.Item>
-            <SubMenu
-              key="sub1"
-              title={
-                <span>
-                  <Icon type="user" />
-                  sub菜单
-              </span>
-              }
-            >
-              <Menu.Item key="page3">page3</Menu.Item>
-              <Menu.Item key="page4">page4</Menu.Item>
-            </SubMenu>
-          </Menu>
-        </Sider>
-        <Layout style={{ padding: '0 24px 24px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
-          <Content
-            style={{
-              background: '#fff',
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
-          >
-            {children}
-          </Content>
-        </Layout>
-      </Layout>
+      {children}
     </Layout>
   );
 }

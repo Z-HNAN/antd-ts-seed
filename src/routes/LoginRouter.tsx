@@ -15,7 +15,7 @@ const SecurityLayout: React.FC<PropsType> = props => {
   const isLogin = true
 
   if (!isLogin) {
-    return <Redirect to="login"></Redirect>;
+    return <Redirect to="/login"></Redirect>;
   }
 
   return children

@@ -10,7 +10,8 @@ const routes: IRoute[] = [
   // 认证页面
   {
     path: '/',
-    component: '../layouts/SecurityLayout',
+    component: '../layouts/BasicLayout',
+    Routes: ['./src/routes/LoginRouter'],
     routes: [
       // 管理员
       {
@@ -27,7 +28,7 @@ const routes: IRoute[] = [
       // 用户
       {
         path: '/user',
-        component: '../layouts/BasicLayout',
+        component: '../layouts/UserLayout',
         routes: [
           { path: '/user', redirect: '/user/page1' }, // 默认inedx为page1
           { path: '/user/page1', component: './user/page1', title: 'page1' },

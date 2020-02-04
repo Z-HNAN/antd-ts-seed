@@ -5,13 +5,13 @@
 import React from 'react'
 import withRouter from 'umi/withRouter'
 import router from 'umi/router';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { ClickParam } from 'antd/lib/menu'
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
-// import styles from './AdminLayout.less'
+// import styles from './UserLayout.less'
 
 // 需要路由跳转的页面
 
@@ -19,10 +19,10 @@ const BasicLayout: React.FC<any> = props => {
   const { children } = props
 
   // 处理router跳转
-  function handleMenuClick (param: ClickParam) {
+  function handleMenuClick(param: ClickParam) {
     const { key } = param
     // 替换路由
-    router.replace(`/admin/${key}`)
+    router.replace(`/user/${key}`)
   }
 
   return (
@@ -38,13 +38,13 @@ const BasicLayout: React.FC<any> = props => {
             <span>
               <Icon type="user" />
               page1
-                </span>
+            </span>
           </Menu.Item>
           <Menu.Item key="page2">
             <span>
               <Icon type="user" />
               page2
-                </span>
+            </span>
           </Menu.Item>
           <SubMenu
             key="sub1"
@@ -52,7 +52,7 @@ const BasicLayout: React.FC<any> = props => {
               <span>
                 <Icon type="user" />
                 sub菜单
-                </span>
+            </span>
             }
           >
             <Menu.Item key="page3">page3</Menu.Item>
@@ -61,6 +61,11 @@ const BasicLayout: React.FC<any> = props => {
         </Menu>
       </Sider>
       <Layout style={{ padding: '0 24px 24px' }}>
+        <Breadcrumb style={{ margin: '16px 0' }}>
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>List</Breadcrumb.Item>
+          <Breadcrumb.Item>App</Breadcrumb.Item>
+        </Breadcrumb>
         <Content
           style={{
             background: '#fff',
