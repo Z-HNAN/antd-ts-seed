@@ -11,7 +11,7 @@ import { ClickParam } from 'antd/lib/menu'
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-// import styles from './BasicLayout.less'
+// import styles from './AdminLayout.less'
 
 // 需要路由跳转的页面
 
@@ -19,10 +19,10 @@ const BasicLayout: React.FC<any> = props => {
   const { children } = props
 
   // 处理router跳转
-  function handleMenuClick(param: ClickParam) {
+  function handleMenuClick (param: ClickParam) {
     const { key } = param
     // 替换路由
-    router.replace(`/user/${key}`)
+    router.replace(`/admin/${key}`)
   }
 
   return (
@@ -87,7 +87,7 @@ const BasicLayout: React.FC<any> = props => {
             }}
           >
             {children}
-          </Content>
+        </Content>
         </Layout>
       </Layout>
     </Layout>

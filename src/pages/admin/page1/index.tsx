@@ -3,7 +3,6 @@
  */
 
 import React from 'react'
-import { Button } from 'antd-mobile'
 import Router from 'umi/router';
 
 const Me: React.FC<{}> = () => {
@@ -13,8 +12,7 @@ const Me: React.FC<{}> = () => {
 
   return (
     <div>
-      <h1>我的</h1>
-      <Button type="primary" onClick={handleClick}>去非Tabbar页面</Button>
+      <h1>Admin-Page1</h1>
     </div>
   )
 }

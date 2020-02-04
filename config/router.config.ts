@@ -2,18 +2,43 @@ import { IRoute } from 'umi-types'
 
 /* 项目路由配置 (采用配置式路由) */
 const routes: IRoute[] = [
-  // 默认跳转去post页面
+  // 登录页面
+  {
+    path: '/login',
+    component: './login',
+  },
+  // 认证页面
   {
     path: '/',
-    component: '../layouts/BasicLayout',
+    component: '../layouts/SecurityLayout',
     routes: [
-      { path: '/', redirect: '/users' },
-      { path: '/users', component: './users', title: '用户' },
-      { path: '/me', component: './me', title: '我的' },
-      { path: '/your', component: './your', title: '你的' },
+      // 管理员
+      {
+        path: '/admin',
+        component: '../layouts/AdminLayout',
+        Routes: ['./src/routes/AdminRouter'],
+        routes: [
+          { path: '/admin', redirect: '/admin/page1' }, // 默认inedx为page1
+          { path: '/admin/page1', component: './admin/page1', title: 'page1' },
+          { path: '/admin/page2', component: './admin/page2', title: 'page2' },
+          { path: '*', redirect: '/admin/page1' }, // 未匹配到重定向去page1
+        ],
+      },
+      // 用户
+      {
+        path: '/user',
+        component: '../layouts/BasicLayout',
+        routes: [
+          { path: '/user', redirect: '/user/page1' }, // 默认inedx为page1
+          { path: '/user/page1', component: './user/page1', title: 'page1' },
+          { path: '/user/page2', component: './user/page2', title: 'page2' },
+          { path: '*', redirect: '/user/page1' }, // 未匹配到重定向去page1
+        ],
+      },
+      // 404
       { component: '404', title: '页面走丢了...' },
     ],
-  }
+  },
 ]
 
 export default routes

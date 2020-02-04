@@ -5,7 +5,8 @@ import plugins from './plugin.config'
 
 
 // ref: https://umijs.org/config/
-const config: IConfig =  {
+const config: IConfig = {
+  disableRedirectHoist: true,
   treeShaking: true,
   routes,
   plugins,
