@@ -8,10 +8,11 @@ import router from 'umi/router';
 import { Layout, Menu, Icon } from 'antd';
 import { ClickParam } from 'antd/lib/menu'
 
+import styles from './AdminLayout.less'
+
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
-// import styles from './AdminLayout.less'
 
 // 需要路由跳转的页面
 
@@ -27,32 +28,29 @@ const BasicLayout: React.FC<any> = props => {
 
   return (
     <Layout>
-      <Sider width={200} style={{ background: '#fff' }}>
+      <Sider width={200}>
         <Menu
+          className={styles.menu}
           mode="inline"
           defaultSelectedKeys={['page1']}
-          style={{ height: '100%', borderRight: 0 }}
           onClick={handleMenuClick}
         >
           <Menu.Item key="page1">
             <span>
-              <Icon type="user" />
-              page1
-                </span>
+              <Icon type="user" />page1
+            </span>
           </Menu.Item>
           <Menu.Item key="page2">
             <span>
-              <Icon type="user" />
-              page2
-                </span>
+              <Icon type="user" />page2
+            </span>
           </Menu.Item>
           <SubMenu
             key="sub1"
             title={
               <span>
-                <Icon type="user" />
-                sub菜单
-                </span>
+                <Icon type="user" />sub菜单
+              </span>
             }
           >
             <Menu.Item key="page3">page3</Menu.Item>
@@ -60,15 +58,8 @@ const BasicLayout: React.FC<any> = props => {
           </SubMenu>
         </Menu>
       </Sider>
-      <Layout style={{ padding: '0 24px 24px' }}>
-        <Content
-          style={{
-            background: '#fff',
-            padding: 24,
-            margin: 0,
-            minHeight: 280,
-          }}
-        >
+      <Layout className={styles.body}>
+        <Content className={styles.content}>
           {children}
         </Content>
       </Layout>
