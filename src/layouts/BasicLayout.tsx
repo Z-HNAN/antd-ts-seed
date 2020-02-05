@@ -3,69 +3,43 @@
  */
 
 import React, { ReactElement } from 'react'
-import { withRouter, router } from 'umi'
-import { Layout, Avatar, Menu, Dropdown, Modal, Icon } from 'antd';
+import { Layout } from 'antd';
+
+import { Header as HeaderComponent } from './components/Basic'
+
 import styles from './BasicLayout.less'
 
-const { confirm } = Modal;
-const { Header } = Layout;
+const { Content, Sider } = Layout;
 
 interface PropsType {
-  children: ReactElement
+  menu: ReactElement
+  content: ReactElement
 }
 
-// 用户头像类型
-const UserTypeList = [
-  ['admin', '#f56a00'],
-  ['user', '#7265e6'],
-  ['tourist', '#ffbf00'],
-]
-
 const BasicLayout: React.FC<PropsType> = props => {
-  const { children } = props
-
-  const [userName, userAvatarColor] = UserTypeList[0]
-
-  // 处理退出，二次确认框确认
-  const handleLogout = () => {
-    confirm({
-      title: '你确定要退出吗?',
-      onOk() {
-        router.push('/login')
-      },
-    })
-  }
-
-  const userNameMenu = (
-    <Menu>
-      <Menu.Item>
-        <a onClick={handleLogout}>
-          退出登录
-        </a>
-      </Menu.Item>
-    </Menu>
-  )
+  const {
+    menu: MenuComponent,
+    content,
+  } = props
 
   return (
     <Layout>
-      <Header className={styles.header}>
-        <div className={styles.logo} />
-        Header
-        <div className={styles.user}>
-          <Avatar className={styles.userAvatar} style={{ backgroundColor: userAvatarColor, verticalAlign: 'middle' }} size="large">
-            {userName}
-          </Avatar>
-          <Dropdown className={styles.userName} overlay={userNameMenu}>
-            <a className="ant-dropdown-link" href="#">
-              赵大锤 <Icon type="down" />
-            </a>
-          </Dropdown>
-        </div>
-      </Header>
-      {children}
+      <Layout>
+        <HeaderComponent />
+      </Layout>
+      <Layout>
+        <Sider width={200}>
+          {MenuComponent}
+        </Sider>
+        <Layout className={styles.body}>
+          <Content className={styles.content}>
+            {content}
+          </Content>
+        </Layout>
+      </Layout>
     </Layout>
   );
 }
 
 
-export default withRouter(BasicLayout)
+export default BasicLayout
