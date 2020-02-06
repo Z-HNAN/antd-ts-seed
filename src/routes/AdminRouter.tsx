@@ -23,7 +23,7 @@ const AdminRouter: React.FC<PropsType> = props => {
     />
   )
 
-  return true ? children : noMatch
+  return false ? children : noMatch
 }
 
 export default AdminRouter

@@ -16,7 +16,7 @@ interface PropsType {
 }
 
 // 用户头像类型
-const UserTypeList = [
+const UserTypeList: [string, string][] = [
   ['admin', '#f56a00'],
   ['user', '#7265e6'],
   ['tourist', '#ffbf00'],

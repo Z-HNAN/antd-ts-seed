@@ -57,4 +57,15 @@ const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
 });
 
+
+/**
+ * 操作结果返回类型,用于判断普遍操作是否成功
+ */
+export interface OperationResultType {
+  // 操作是否成功
+  success: boolean
+  // 如果有误，返回的结果问题
+  msg: string
+}
+
 export default request;
