@@ -1,6 +1,10 @@
 import { IUsersModelState } from './users'
+import { GlobalModelStateType } from './global'
 
-export { IUsersModelState }
+export {
+  IUsersModelState,
+  GlobalModelStateType,
+}
 
 export interface LoadingType {
   global: boolean;
@@ -16,6 +20,7 @@ export interface LoadingType {
 export interface IConnectState {
   loading: LoadingType
   users: IUsersModelState
+  global: GlobalModelStateType
 }
 
 // export interface Route  {

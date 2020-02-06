@@ -2,8 +2,12 @@
  * 普通布局
  */
 
-import React, { ReactElement } from 'react'
-import { withRouter, router } from 'umi'
+import React from 'react'
+import { connect } from 'dva'
+import { router } from 'umi'
+import { Dispatch } from 'redux'
+import { IConnectState } from '@/models/connect.d'
+import { CurrentUserType } from '@/models/global'
 import { Layout, Avatar, Menu, Dropdown, Modal, Icon } from 'antd';
 
 import styles from './index.less'
@@ -12,24 +16,42 @@ const { confirm } = Modal;
 const { Header } = Layout;
 
 interface PropsType {
-  children: ReactElement
+  currentUser: CurrentUserType
+  dispatch: Dispatch
 }
 
 // 用户头像类型
 const UserTypeList: [string, string][] = [
-  ['admin', '#f56a00'],
-  ['user', '#7265e6'],
-  ['tourist', '#ffbf00'],
+  ['tourist', '#ffbf00'], // 游客权限
+  ['admin', '#f56a00'], // admin权限
+  ['user', '#7265e6'], // user权限
 ]
 
+const mapStateToProps = (state: IConnectState) => {
+  const currentUser = (state.global.currentUser) as CurrentUserType
+
+  return { currentUser }
+}
+
 const HeaderComponent: React.FC<PropsType> = props => {
-  const [userName, userAvatarColor] = UserTypeList[0]
+  const {
+    dispatch,
+    currentUser,
+  } = props
+
+  // 依次循环权限项，判断当前登录用户是否拥有该权限，如果都没有就赋予游客权限
+  const [userName, userAvatarColor] = UserTypeList.find(
+    ([auth]) => currentUser.authority.includes(auth),
+  ) || UserTypeList[0]
 
   // 处理退出，二次确认框确认
   const handleLogout = () => {
     confirm({
       title: '你确定要退出吗?',
       onOk() {
+        // 发出退出事件
+        dispatch({ type: 'global/logout' })
+        // 路由回退
         router.push('/login')
       },
     })
@@ -64,4 +86,4 @@ const HeaderComponent: React.FC<PropsType> = props => {
 }
 
 
-export default withRouter(HeaderComponent)
+export default connect(mapStateToProps)(HeaderComponent)

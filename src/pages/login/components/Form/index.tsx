@@ -1,20 +1,33 @@
 import React from 'react'
-import Router from 'umi/router';
-import { Form, Icon, Input, Button, Checkbox } from 'antd'
+import Router from 'umi/router'
+import { FormComponentProps } from 'antd/es/form'
+import { Form, Icon, Input, Button } from 'antd'
 
 import styles from './index.less'
 
+export interface LoginParamsType {
+  username: string
+  password: string
+}
+
 interface PropsType {
   className: string
-  form: any
+  form: FormComponentProps['form']
+  onSubmit: (values: LoginParamsType) => void
 }
 
 class NormalLoginForm extends React.PureComponent<PropsType> {
-  handleSubmit = e => {
+  handleSubmit = (e: React.FormEvent) => {
+    // 阻止默认事件
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
+
+    const { form, onSubmit } = this.props
+
+    // 表单无误进行提交
+    form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
+        const { username, password } = values
+        onSubmit({ username, password })
       }
     });
   };
@@ -56,16 +69,17 @@ class NormalLoginForm extends React.PureComponent<PropsType> {
             登录
           </Button>
         </Form.Item>
-        {/* 开发暂时使用的导向按钮 */}
+        {/* --------开发暂时使用的导向按钮-------- */}
         <Button type="primary" onClick={() => { Router.push('/user') }}>
           user管理
         </Button>
         <Button type="primary" onClick={() => { Router.push('/admin') }}>
           admin管理
         </Button>
+        {/* --------开发暂时使用的导向按钮-------- */}
       </Form>
     );
   }
 }
 
-export default Form.create({ name: 'normal_login' })(NormalLoginForm)
+export default Form.create<PropsType>()(NormalLoginForm)

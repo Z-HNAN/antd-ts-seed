@@ -1,12 +1,22 @@
 import { Reducer } from 'redux'
 import { Effect } from 'dva'
+import { router } from 'umi'
 import { OperationResultType } from '@/utils/request'
 import * as globalService from '@/services/global'
+
+// 登录权限与页面对应表
+const authMapRoute: {
+  admin: string
+  user: string
+} = {
+  admin: '/admin',
+  user: '/user',
+}
 
 export interface CurrentUserType {
   id: string
   username: string
-  authority: string[]
+  authority: ('admin' | 'user')[]
 }
 
 export interface GlobalModelStateType {
@@ -42,6 +52,12 @@ const GlobalModel: GlobalModelType = {
     *login({ payload }, { call, put }) {
       const { username, password } = payload
       const currentUser: CurrentUserType = yield call(globalService.login, { username, password })
+
+      // 1.根据currentUser权限跳转去不同的界面,取第一个主权限
+      const [auth] = currentUser.authority
+      router.push(authMapRoute[auth])
+
+      // 2.将currentUser的内容保存到state中
       yield put({ type: 'changeCurrentUser', payload: currentUser })
     },
     *logout(_, { call, put }) {

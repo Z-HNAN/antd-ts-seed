@@ -3,13 +3,22 @@
  */
 
 import React from 'react'
+import { Dispatch } from 'redux'
+import { connect } from 'dva'
 import Router from 'umi/router';
 
 import styles from './index.less'
 
-import Form from './components/Form'
+import FormComponent, { LoginParamsType } from './components/Form'
 
-const Me: React.FC<{}> = () => {
+export interface LoginProps {
+  dispatch: Dispatch
+}
+
+const Login: React.FC<LoginProps> = props => {
+  const {
+    dispatch,
+  } = props
 
   // const handleSubmit = e => {
   //   e.preventDefault();
@@ -24,6 +33,12 @@ const Me: React.FC<{}> = () => {
   //   Router.push('/your')
   // }
 
+  // 处理登录
+  const handleSubmit = (values: LoginParamsType) => {
+    const { username, password } = values
+    dispatch({ type: 'global/login', payload: { username, password } })
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -34,10 +49,13 @@ const Me: React.FC<{}> = () => {
           </div>
           <div className={styles.desc}>description</div>
         </div>
-        <Form className={styles.from}/>
+        <FormComponent
+          onSubmit={handleSubmit}
+          className={styles.from}
+        />
       </div>
     </div>
   )
 }
 
-export default Me
+export default connect()(Login)
