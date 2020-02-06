@@ -13,10 +13,12 @@ const authMapRoute: {
   user: '/user',
 }
 
+export type AuthorityType = 'admin' | 'user'
+
 export interface CurrentUserType {
   id: string
   username: string
-  authority: ('admin' | 'user')[]
+  authority: AuthorityType[]
 }
 
 export interface GlobalModelStateType {

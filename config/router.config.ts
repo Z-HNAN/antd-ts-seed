@@ -28,6 +28,7 @@ const routes: IRoute[] = [
       {
         path: '/user',
         component: '../layouts/UserLayout',
+        Routes: ['./src/routes/UserRouter'],
         routes: [
           { path: '/user', redirect: '/user/page1' }, // 默认inedx为page1
           { path: '/user/page1', component: './user/page1', title: 'page1' },

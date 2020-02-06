@@ -16,7 +16,7 @@ const mapStateToProps = (state: IConnectState) => {
   return { authority: currentUser.authority }
 }
 
-const AdminRouter: React.FC<PropsType> = props => {
+const UserRouter: React.FC<PropsType> = props => {
   const {
     authority,
     children,
@@ -37,8 +37,8 @@ const AdminRouter: React.FC<PropsType> = props => {
   )
 
   // 检测是否有Admin权限
-  const hasAuth = authority.includes('admin')
+  const hasAuth = authority.includes('user')
   return hasAuth ? children : noMatch
 }
 
-export default connect(mapStateToProps)(AdminRouter)
+export default connect(mapStateToProps)(UserRouter)

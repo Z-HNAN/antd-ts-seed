@@ -1,5 +1,4 @@
 import React from 'react'
-import Router from 'umi/router'
 import { FormComponentProps } from 'antd/es/form'
 import { Form, Icon, Input, Button } from 'antd'
 
@@ -69,14 +68,6 @@ class NormalLoginForm extends React.PureComponent<PropsType> {
             登录
           </Button>
         </Form.Item>
-        {/* --------开发暂时使用的导向按钮-------- */}
-        <Button type="primary" onClick={() => { Router.push('/user') }}>
-          user管理
-        </Button>
-        <Button type="primary" onClick={() => { Router.push('/admin') }}>
-          admin管理
-        </Button>
-        {/* --------开发暂时使用的导向按钮-------- */}
       </Form>
     );
   }
