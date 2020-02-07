@@ -44,7 +44,12 @@ export interface GlobalModelType {
 }
 
 const INIT_STATE: GlobalModelStateType = {
-  currentUser: null,
+  // currentUser: null,
+  currentUser: {
+    id: '123456',
+    username: '赵大锤',
+    authority: ['user'],
+  }
 }
 
 const GlobalModel: GlobalModelType = {

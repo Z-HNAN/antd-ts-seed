@@ -44,14 +44,14 @@ const UsersModel: IUsersModelType = {
     list: [],
   },
   reducers: {
-    save(state, { payload: { data: list } }) {
+    save(state, { payload: list }) {
       return { ...state, list }
     },
   },
   effects: {
     *fetch(_, { call, put }) {
-      const data = yield call(userService.fetch)
-      yield put({ type: 'save', payload: { data } })
+      const list = yield call(userService.fetch)
+      yield put({ type: 'save', payload: list })
     },
     *init(_, { put, select }) {
       const list = yield select((state: IConnectState) => state.users.list)
@@ -75,7 +75,7 @@ const UsersModel: IUsersModelType = {
   subscriptions: {
     init({ dispatch, history }) {
       return history.listen(({ pathname }) => {
-        if (pathname === '/users') {
+        if (pathname === '/user/page1') {
           dispatch({ type: 'init' })
         }
       })
