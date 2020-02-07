@@ -28,7 +28,7 @@ class NormalLoginForm extends React.PureComponent<PropsType> {
         const { username, password } = values
         onSubmit({ username, password })
       }
-    });
+    })
   };
 
   render() {

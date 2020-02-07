@@ -49,7 +49,7 @@ const INIT_STATE: GlobalModelStateType = {
     id: '123456',
     username: '赵大锤',
     authority: ['user'],
-  }
+  },
 }
 
 const GlobalModel: GlobalModelType = {

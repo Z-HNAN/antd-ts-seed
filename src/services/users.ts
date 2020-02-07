@@ -12,7 +12,7 @@ export async function remove({ id }: { id: string }) {
   })
 }
 
-export async function create ({ values }: {values: IUser}) {
+export async function create(values: IUser) {
   const { email, name, website } = values
   return request('users', {
     method: 'POST',

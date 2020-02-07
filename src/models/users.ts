@@ -1,6 +1,9 @@
 import { Reducer } from 'redux'
 import { Subscription, Effect } from 'dva'
 import { IConnectState } from './connect.d'
+import { UserInfoFormParams } from '@/pages/user/page1/components/UserInfoForm'
+import { EMPTY_USERINFO_PARAMS } from '@/pages/user/page1/components/UserInfoModal'
+
 
 import * as userService from '@/services/users'
 
@@ -13,6 +16,7 @@ export interface IUser {
 
 export interface IUsersModelState {
   list: IUser[]
+  edit: UserInfoFormParams
 }
 
 export interface IUsersModelType {
@@ -21,6 +25,8 @@ export interface IUsersModelType {
   reducers: {
     /* 存入state中 */
     save: Reducer<any>,
+    /* 改变当前正在修改的user */
+    changeEdit: Reducer<any>,
   }
   effects: {
     /* 拉取用户 */
@@ -42,10 +48,14 @@ const UsersModel: IUsersModelType = {
   namespace: 'users',
   state: {
     list: [],
+    edit: EMPTY_USERINFO_PARAMS,
   },
   reducers: {
     save(state, { payload: list }) {
       return { ...state, list }
+    },
+    changeEdit(state, { payload: { user } }) {
+      return { ...state, edit: user }
     },
   },
   effects: {
@@ -66,8 +76,7 @@ const UsersModel: IUsersModelType = {
       yield put({ type: 'fetch' })
     },
     *create({ payload }, { call, put }) {
-      const { values } = payload
-      yield call(userService.create, { values })
+      yield call(userService.create, { ...payload })
       yield put({ type: 'fetch' })
     },
   },
