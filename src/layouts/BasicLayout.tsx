@@ -2,8 +2,9 @@
  * 普通布局
  */
 
+import zhCN from 'antd/es/locale/zh_CN'
 import React, { ReactElement } from 'react'
-import { Layout } from 'antd';
+import { Layout, ConfigProvider } from 'antd';
 
 import { Header as HeaderComponent } from './components/Basic'
 
@@ -23,21 +24,23 @@ const BasicLayout: React.FC<PropsType> = props => {
   } = props
 
   return (
-    <Layout>
+    <ConfigProvider locale={zhCN}>
       <Layout>
-        <HeaderComponent />
-      </Layout>
-      <Layout>
-        <Sider width={200}>
-          {MenuComponent}
-        </Sider>
-        <Layout className={styles.body}>
-          <Content className={styles.content}>
-            {content}
-          </Content>
+        <Layout>
+          <HeaderComponent />
+        </Layout>
+        <Layout>
+          <Sider width={200}>
+            {MenuComponent}
+          </Sider>
+          <Layout className={styles.body}>
+            <Content className={styles.content}>
+              {content}
+            </Content>
+          </Layout>
         </Layout>
       </Layout>
-    </Layout>
+    </ConfigProvider>
   );
 }
 
