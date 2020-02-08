@@ -1,44 +1,17 @@
 import React, { ReactElement } from 'react'
-import { connect } from 'dva'
-import { IConnectState } from '@/models/connect.d'
-import { CurrentUserType, AuthorityType } from '@/models/global'
-import { Link } from 'umi'
-import { Result, Button } from 'antd'
 
-interface PropsType {
-  authority: AuthorityType[]
+import BasicAuthorityRouter from './BasicAuthorityRouter'
+
+interface AdminRouterProps {
   children: ReactElement
 }
 
-const mapStateToProps = (state: IConnectState) => {
-  const currentUser = (state.global.currentUser) as CurrentUserType
-
-  return { authority: currentUser.authority }
-}
-
-const AdminRouter: React.FC<PropsType> = props => {
-  const {
-    authority,
-    children,
-  } = props
-
-  // 无权限UI
-  const noMatch = (
-    <Result
-      status="403"
-      title="无权访问"
-      subTitle="对不起，您无权访问该页面"
-      extra={
-        < Button type="primary" >
-          <Link to="/login">登录其他账号</Link>
-        </Button >
-      }
-    />
+const AdminRouter: React.FC <AdminRouterProps> = props => {
+  return (
+    <BasicAuthorityRouter auth="admin">
+      {props.children}
+    </BasicAuthorityRouter>
   )
-
-  // 检测是否有Admin权限
-  const hasAuth = authority.includes('admin')
-  return hasAuth ? children : noMatch
 }
 
-export default connect(mapStateToProps)(AdminRouter)
+export default AdminRouter
