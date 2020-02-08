@@ -1,4 +1,4 @@
-# Antd-mobile-ts Seed
+# Antd-ts Seed
 
 
 ## install
@@ -13,24 +13,10 @@ yarn start
 
 - typescript
 - eslint (umijs/fabric)
-- antd-mobile
-- CustomSVG
-- tabbar
+- antd
 - umi
 - dva
 
-### tabbar
-
-`src/layout/MenuBar/index.tsx`
-
-```js
-{
-  title: '用户', 
-  icon: 'add',
-  selectedIcon: 'add',
-  link: '/users',
-},
-```
 
 ### demo
 
