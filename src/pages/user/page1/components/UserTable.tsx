@@ -4,6 +4,7 @@ import { page1UserType } from '../selector'
 
 interface UserTableProps {
   users: page1UserType[]
+  loading: boolean
   // 编辑用户
   onEdit: (id: number) => void
   // 删除用户
@@ -13,6 +14,7 @@ interface UserTableProps {
 const UserTable: React.FC<UserTableProps> = props => {
   const {
     users,
+    loading,
     onEdit,
     onRemove,
   } = props
@@ -60,7 +62,7 @@ const UserTable: React.FC<UserTableProps> = props => {
   ]
 
   return (
-    <Table columns={columns} rowKey="id" dataSource={users} />
+    <Table columns={columns} rowKey="id" dataSource={users} loading={loading} />
   )
 }
 

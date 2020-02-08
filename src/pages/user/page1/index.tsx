@@ -19,12 +19,14 @@ import styles from './index.less'
 
 interface Page1Props {
   users: page1UserType[]
+  fetchingUsers: boolean
   editId: number | null
   dispatch: Dispatch
 }
 
 const mapStateToProps = (state: IConnectState) => {
   return {
+    fetchingUsers: (state.loading.effects['users/fetch']) as boolean,
     users: usersSelector(state),
     editId: state.users.edit.id,
   }
@@ -33,6 +35,7 @@ const mapStateToProps = (state: IConnectState) => {
 const Page1: React.FC<Page1Props> = props => {
   const {
     dispatch,
+    fetchingUsers,
     users,
     editId,
   } = props
@@ -88,6 +91,7 @@ const Page1: React.FC<Page1Props> = props => {
         users={users}
         onEdit={handleEdit}
         onRemove={handleRemove}
+        loading={fetchingUsers}
       />
       <UserInfoModal
         visible={modalVisible}
