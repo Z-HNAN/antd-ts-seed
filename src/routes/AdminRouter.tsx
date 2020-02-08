@@ -6,12 +6,10 @@ interface AdminRouterProps {
   children: ReactElement
 }
 
-const AdminRouter: React.FC <AdminRouterProps> = props => {
-  return (
-    <BasicAuthorityRouter auth="admin">
-      {props.children}
-    </BasicAuthorityRouter>
-  )
-}
+const AdminRouter: React.FC <AdminRouterProps> = props => (
+  <BasicAuthorityRouter auth="admin">
+    {props.children}
+  </BasicAuthorityRouter>
+)
 
 export default AdminRouter
