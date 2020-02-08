@@ -12,6 +12,8 @@ const routes: IRoute[] = [
     path: '/',
     Routes: ['./src/routes/LoginRouter'],
     routes: [
+      // 默认去登录页面
+      { path: '/', redirect: '/login' },
       // 管理员
       {
         path: '/admin',
